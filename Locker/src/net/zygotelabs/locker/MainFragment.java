@@ -4,18 +4,35 @@ import android.app.Fragment;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MainFragment extends Fragment  {
 	CheckBox checkBox;
+	Button button;
 	ComponentName mDeviceAdmin;
 	DevicePolicyManager mDPM;
+	RelativeLayout statusLayout;
+	TextView statusTextTitle;
+	TextView statusTextSummary;
+	TextView seekTextValue;
+	SeekBar lockProgress;
+	
 	boolean mAdminActive;
+	/* Our preferences */
+	public SharedPreferences settings;
+	public SharedPreferences.Editor editor;
 	
 	protected static final int REQUEST_CODE_ENABLE_ADMIN=1;
 	
@@ -27,9 +44,11 @@ public class MainFragment extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("Left", "onCreate()");
 		mDeviceAdmin = new ComponentName(getActivity(), DeviceAdmin.class);
 		mDPM=(DevicePolicyManager)getActivity().getSystemService(getActivity().DEVICE_POLICY_SERVICE);
+		/* Load our preferences */
+		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		editor = settings.edit();
 
     }
 
@@ -39,6 +58,38 @@ public class MainFragment extends Fragment  {
 		View rootView = inflater.inflate(R.layout.fragment_main, container,
 				false);
 		checkBox = (CheckBox) rootView.findViewById(R.id.checkBoxAdmin);
+		button = (Button) rootView.findViewById(R.id.buttonApply);
+		statusLayout = (RelativeLayout) rootView.findViewById(R.id.top_layout);
+		statusTextTitle = (TextView) rootView.findViewById(R.id.textViewTopTitle);
+		statusTextSummary = (TextView) rootView.findViewById(R.id.textViewTopTitleSummary);
+		seekTextValue = (TextView) rootView.findViewById(R.id.textViewLockerCount);
+		lockProgress = (SeekBar) rootView.findViewById(R.id.seekBarLocker);
+		
+		lockProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){ 
+
+			   @Override 
+			   public void onProgressChanged(SeekBar seekBar, int progress, 
+			     boolean fromUser) { 
+			    // TODO Auto-generated method stub 
+				   if (progress == 0) { 
+					   lockProgress.setProgress(progress += 1);
+				   }
+				   seekTextValue.setText(String.valueOf(progress));
+				
+			   }
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}  
+			   });
 		updateAdminCheck();
 		return rootView;
 	}
@@ -53,32 +104,67 @@ public class MainFragment extends Fragment  {
 	
 	public void onCheckBoxClicked(boolean checked){
 
-	    if (checked){
+	    if (checked) {
+	    	
 	    	// Launch the activity to have the user enable our admin.
             Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
             intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdmin);
             intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
                     getActivity().getString(R.string.add_admin_extra_app_text));
             startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
-            //disable check - don't update checkbox until we're really active
-            //checkBox.setChecked(false);
             
-	    }else{
+	    }else {
 	    	 mDPM.removeActiveAdmin(mDeviceAdmin);
+	    	 updateAdminCheck();
 	    }
 	}
 	
-	private void updateAdminCheck(){
-	    if (isActiveAdmin()){
-	    	checkBox.setChecked(true);
-	    }else{
-    		checkBox.setChecked(false);
-	    }
+	private void updateAdminCheck(){   
+    	checkBox.setChecked(isActiveAdmin());
+    	button.setEnabled(isActiveAdmin());	
+    	lockProgress.setProgress(settings.getInt("unlockLimit", 3));
+    	updateLockStatus();
+    	
+	}
+	
+	private void updateLockStatus(){
+		boolean isProtected = settings.getBoolean("lockEnabled", false);
+		
+    	if (isProtected){
+    		statusLayout.setBackgroundColor(Color.parseColor("#74ae35"));
+    		statusTextTitle.setText(getActivity().getString(R.string.protect));
+    		int unlockLimit = settings.getInt("unlockLimit", 3);
+    		statusTextSummary.setText(getActivity().getString(R.string.protected_summary_one)
+    				+ " " + Integer.toString(unlockLimit) + " "
+    				+ getActivity().getString(R.string.protected_summary_two));
+    		
+    	}else{
+    		statusLayout.setBackgroundColor(Color.parseColor("#c61e4e"));
+    		statusTextTitle.setText(getActivity().getString(R.string.not_protected));
+    		statusTextSummary.setText(getActivity().getString(R.string.not_protected_summary));
+    		
+    	}
 	}
 	
 	 private boolean isActiveAdmin() {
-	        return mDPM.isAdminActive(mDeviceAdmin);
-	    }
+		 return mDPM.isAdminActive(mDeviceAdmin);
+	 }
 	
-	
+	 public void toggleLockProtection(){
+		 if (settings.getBoolean("lockEnabled", false)){
+			 editor.putBoolean("lockEnabled", false);
+			 editor.commit();
+			 mDPM.removeActiveAdmin(mDeviceAdmin);
+			 updateAdminCheck();
+			 checkBox.setChecked(false);
+
+		 }else{
+			 mDPM.setMaximumFailedPasswordsForWipe(mDeviceAdmin, lockProgress.getProgress());
+			 editor.putInt("unlockLimit",  lockProgress.getProgress());
+			 editor.putBoolean("lockEnabled", true);
+			 editor.commit();
+			 updateAdminCheck();
+		 }
+
+	 }
 }

@@ -30,11 +30,16 @@ public class MainActivity extends Activity {
 		boolean checked = ((CheckBox) view).isChecked();
 		fragment.onCheckBoxClicked(checked);
 	}
+	
+	public void enableProtection(View view){
+		MainFragment fragment = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
+		fragment.toggleLockProtection();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
