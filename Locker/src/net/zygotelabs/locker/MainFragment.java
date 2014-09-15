@@ -168,13 +168,14 @@ public class MainFragment extends Fragment  {
     				+ " " + Integer.toString(unlockLimit) + " "
     				+ getActivity().getString(R.string.protected_summary_two));
     		button.setText(getActivity().getString(R.string.disable));
+    		lockProgress.setEnabled(false);
     		
     	}else{
     		statusLayout.setBackgroundColor(Color.parseColor("#c61e4e"));
     		statusTextTitle.setText(getActivity().getString(R.string.not_protected));
     		statusTextSummary.setText(getActivity().getString(R.string.not_protected_summary));
     		button.setText(getActivity().getString(R.string.enable));
-    		
+    		lockProgress.setEnabled(true);
     	}
 	}
 	
@@ -229,8 +230,6 @@ public class MainFragment extends Fragment  {
             DialogFragment dialogFrag = EnableLockProtectionDialog.newInstance(123);
             dialogFrag.setTargetFragment(this, DIALOG_FRAGMENT);
             dialogFrag.show(getFragmentManager().beginTransaction(), "dialog");
-
 		    }
-		
 	 
 }
