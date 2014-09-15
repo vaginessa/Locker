@@ -1,6 +1,11 @@
 package net.zygotelabs.locker;
 
+import net.zygotelabs.locker.dialogs.EnableLockProtectionDialog;
+import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -29,6 +34,8 @@ public class MainFragment extends Fragment  {
 	TextView seekTextValue;
 	SeekBar lockProgress;
 	
+	int mStackLevel = 0;
+	public static final int DIALOG_FRAGMENT = 5;
 	boolean mAdminActive;
 	/* Our preferences */
 	public SharedPreferences settings;
@@ -44,12 +51,22 @@ public class MainFragment extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mStackLevel = savedInstanceState.getInt("level");
+        }
+        
 		mDeviceAdmin = new ComponentName(getActivity(), DeviceAdmin.class);
 		mDPM=(DevicePolicyManager)getActivity().getSystemService(getActivity().DEVICE_POLICY_SERVICE);
 		/* Load our preferences */
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		editor = settings.edit();
 
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("level", mStackLevel);
     }
 
 	@Override
@@ -75,6 +92,8 @@ public class MainFragment extends Fragment  {
 					   lockProgress.setProgress(progress += 1);
 				   }
 				   seekTextValue.setText(String.valueOf(progress));
+				   editor.putInt("unlockLimit",  lockProgress.getProgress());
+				   editor.commit();
 				
 			   }
 
@@ -100,6 +119,18 @@ public class MainFragment extends Fragment  {
 	    super.onActivityResult(requestCode, resultCode, data);
 	    updateAdminCheck();
 	    
+	    switch(requestCode) {
+        case DIALOG_FRAGMENT:
+
+            if (resultCode == Activity.RESULT_OK) {
+            	enableLockProtection();
+            } else if (resultCode == Activity.RESULT_CANCELED){
+                // After Cancel code.
+            }
+
+            break;
+    }
+	    
 	}
 	
 	public void onCheckBoxClicked(boolean checked){
@@ -115,15 +146,14 @@ public class MainFragment extends Fragment  {
             
 	    }else {
 	    	 mDPM.removeActiveAdmin(mDeviceAdmin);
-	    	 updateAdminCheck();
+	    	 adjustAdminUI(false);
 	    }
 	}
 	
 	private void updateAdminCheck(){   
-    	checkBox.setChecked(isActiveAdmin());
-    	button.setEnabled(isActiveAdmin());	
+		adjustAdminUI(isActiveAdmin());
+
     	lockProgress.setProgress(settings.getInt("unlockLimit", 3));
-    	updateLockStatus();
     	
 	}
 	
@@ -137,13 +167,25 @@ public class MainFragment extends Fragment  {
     		statusTextSummary.setText(getActivity().getString(R.string.protected_summary_one)
     				+ " " + Integer.toString(unlockLimit) + " "
     				+ getActivity().getString(R.string.protected_summary_two));
+    		button.setText(getActivity().getString(R.string.disable));
     		
     	}else{
     		statusLayout.setBackgroundColor(Color.parseColor("#c61e4e"));
     		statusTextTitle.setText(getActivity().getString(R.string.not_protected));
     		statusTextSummary.setText(getActivity().getString(R.string.not_protected_summary));
+    		button.setText(getActivity().getString(R.string.enable));
     		
     	}
+	}
+	
+	private void adjustAdminUI(boolean adminState){
+			checkBox.setChecked(adminState);
+	    	button.setEnabled(adminState);
+	    	if (!adminState){
+	    		editor.putBoolean("lockEnabled", false);
+	    		editor.commit();
+	    	}
+	    	updateLockStatus();
 	}
 	
 	 private boolean isActiveAdmin() {
@@ -159,12 +201,36 @@ public class MainFragment extends Fragment  {
 			 checkBox.setChecked(false);
 
 		 }else{
-			 mDPM.setMaximumFailedPasswordsForWipe(mDeviceAdmin, lockProgress.getProgress());
-			 editor.putInt("unlockLimit",  lockProgress.getProgress());
-			 editor.putBoolean("lockEnabled", true);
-			 editor.commit();
-			 updateAdminCheck();
+			 showDialog();
+			 
 		 }
 
 	 }
+	 
+	 public void enableLockProtection(){
+		 mDPM.setMaximumFailedPasswordsForWipe(mDeviceAdmin, lockProgress.getProgress());
+		 editor.putInt("unlockLimit",  lockProgress.getProgress());
+		 editor.putBoolean("lockEnabled", true);
+		 editor.commit();
+		 updateAdminCheck();
+	 }
+	 
+	 void showDialog() {
+
+		    mStackLevel++;
+
+		    FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+		    Fragment prev = getActivity().getFragmentManager().findFragmentByTag("EnableLockProtectionDialog");
+		    if (prev != null) {
+		        ft.remove(prev);
+		    }
+		    ft.addToBackStack(null);
+
+            DialogFragment dialogFrag = EnableLockProtectionDialog.newInstance(123);
+            dialogFrag.setTargetFragment(this, DIALOG_FRAGMENT);
+            dialogFrag.show(getFragmentManager().beginTransaction(), "dialog");
+
+		    }
+		
+	 
 }
