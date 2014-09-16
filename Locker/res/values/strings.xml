@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Locker</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     
     <string name="not_protected">Not protected</string>
@@ -10,7 +9,7 @@
     <string name="protect">Protected</string>
     <string name="protected_summary_one">Device will be erased after</string>
     <string name="protected_summary_two">failed unlock attempts.</string>
-    <string name="admin_summary">Locker needs Administrator access in order to control lock screen protection.</string>
+    <string name="admin_summary">Locker needs Administrator access in order to control the lock screen protection.</string>
     <string name="admin_checkbox">Admin Enabled</string>
     <string name="attempts">Allowed Unlock Attempts</string>
     <string name="enable">Enable</string>

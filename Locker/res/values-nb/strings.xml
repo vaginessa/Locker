@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Locker</string>
-    
+    <string name="action_settings">Innstillinger</string>
+        
     <string name="not_protected">Ikke beskyttet</string>
     <string name="not_protected_summary">Låseskjermen din er ikke beskyttet.</string>
     <string name="protect">Beskyttet</string>
