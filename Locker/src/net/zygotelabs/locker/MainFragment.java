@@ -1,5 +1,6 @@
 package net.zygotelabs.locker;
 
+import net.zygotelabs.locker.dialogs.DisableLockProtectionDialog;
 import net.zygotelabs.locker.dialogs.EnableLockProtectionDialog;
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -33,7 +34,8 @@ public class MainFragment extends Fragment  {
 	SeekBar lockProgress;
 	
 	int mStackLevel = 0;
-	public static final int DIALOG_FRAGMENT = 5;
+	public static final int ENABLE_PROTECTION_DIALOG_FRAGMENT = 5;
+	public static final int DISABLE_PROTECTION_DIALOG_FRAGMENT = 6;
 	boolean mAdminActive;
 	/* Our preferences */
 	public SharedPreferences settings;
@@ -118,7 +120,7 @@ public class MainFragment extends Fragment  {
 	    updateAdminCheck();
 	    
 	    switch(requestCode) {
-        case DIALOG_FRAGMENT:
+        case ENABLE_PROTECTION_DIALOG_FRAGMENT:
 
             if (resultCode == Activity.RESULT_OK) {
             	enableLockProtection();
@@ -127,6 +129,11 @@ public class MainFragment extends Fragment  {
             }
 
             break;
+        case DISABLE_PROTECTION_DIALOG_FRAGMENT:
+        	if (resultCode == Activity.RESULT_OK) {
+        		disableLockProtection();
+        	}
+        	break;
     }
 	    
 	}
@@ -193,14 +200,10 @@ public class MainFragment extends Fragment  {
 	
 	 public void toggleLockProtection(){
 		 if (settings.getBoolean("lockEnabled", false)){
-			 editor.putBoolean("lockEnabled", false);
-			 editor.commit();
-			 mDPM.removeActiveAdmin(mDeviceAdmin);
-			 updateAdminCheck();
-			 checkBox.setChecked(false);
+			 showDisableProtectionDialog();
 
 		 }else{
-			 showDialog();
+			 showEnableProtectionDialog();
 			 
 		 }
 
@@ -214,7 +217,7 @@ public class MainFragment extends Fragment  {
 		 updateAdminCheck();
 	 }
 	 
-	 void showDialog() {
+	 void showEnableProtectionDialog() {
 
 		    mStackLevel++;
 
@@ -225,9 +228,33 @@ public class MainFragment extends Fragment  {
 		    }
 		    ft.addToBackStack(null);
 
-            DialogFragment dialogFrag = EnableLockProtectionDialog.newInstance(123);
-            dialogFrag.setTargetFragment(this, DIALOG_FRAGMENT);
-            dialogFrag.show(getFragmentManager().beginTransaction(), "dialog");
+            DialogFragment dialogFrag = EnableLockProtectionDialog.newInstance(100);
+            dialogFrag.setTargetFragment(this, ENABLE_PROTECTION_DIALOG_FRAGMENT);
+            dialogFrag.show(getFragmentManager().beginTransaction(), "EnableLockProtectionDialog");
 		    }
+	 
+	 public void disableLockProtection(){
+		 editor.putBoolean("lockEnabled", false);
+		 editor.commit();
+		 mDPM.removeActiveAdmin(mDeviceAdmin);
+		 updateAdminCheck();
+		 checkBox.setChecked(false);
+	 }
+	 
+	 void showDisableProtectionDialog() {
+
+		    mStackLevel++;
+
+		    FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+		    Fragment prev = getActivity().getFragmentManager().findFragmentByTag("DisableLockProtectionDialog");
+		    if (prev != null) {
+		        ft.remove(prev);
+		    }
+		    ft.addToBackStack(null);
+
+         DialogFragment dialogFrag = DisableLockProtectionDialog.newInstance(101);
+         dialogFrag.setTargetFragment(this, DISABLE_PROTECTION_DIALOG_FRAGMENT);
+         dialogFrag.show(getFragmentManager().beginTransaction(), "DisableLockProtectionDialog");
+	 }
 	 
 }
