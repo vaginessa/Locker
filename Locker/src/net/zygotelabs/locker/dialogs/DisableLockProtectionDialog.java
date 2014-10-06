@@ -30,7 +30,7 @@ public class DisableLockProtectionDialog extends DialogFragment{
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	    // Get the layout inflater
 	    LayoutInflater inflater = getActivity().getLayoutInflater();
-	    View v = inflater.inflate(R.layout.lock_dialog_layout, null, false);
+	    View v = inflater.inflate(R.layout.disable_lock_dialog_layout, null, false);
 	    builder.setView(v)
 	    // Add action buttons
 	           .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
