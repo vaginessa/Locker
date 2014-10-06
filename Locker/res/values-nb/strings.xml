@@ -20,6 +20,8 @@
     <string name="lock_dialog_summary">Telefonen din vil bli slettet og tilbakestilt etter det gitte antallet mislykkede opplåsingsforsøk. Du kan deaktivere beskyttelsen når som helst fra Locker.</string>
     <string name="yes">Ja</string>
     <string name="no">Nei</string>
+    <string name="lock_disable_dialog_title">Deaktiver beskyttelsen av telefonlås?</string>
+    <string name="lock_disable_dialog_summary">Låseskjermen din vil ikke lenger være beskyttet som muliggjør et uendelig antall forsøk på å låse opp telefonen.</string>
     
     <!--  Device Administration -->
     <string name="activity_sample_device_admin">Locker Administrator</string>

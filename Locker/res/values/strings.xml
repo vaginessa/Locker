@@ -15,12 +15,14 @@
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
     
-    <!--  Lock protection dialog -->
+    <!--  Lock protection dialogs -->
     <string name="lock_dialog_title">Enable lock screen protection?</string>
     <string name="lock_dialog_summary">Your device will be wiped after the specified number of failed unlock attempts. You can disable this protection any time with Locker.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    
+    <string name="lock_disable_dialog_title">Disable lock screen protection?</string>
+    <string name="lock_disable_dialog_summary">Your lock screen will no longer be protected and an unlimited number of attempts to unlock your device will be possible.</string>
+
     <!--  Device Administration -->
     <string name="activity_sample_device_admin">Locker Administrator</string>
     <string name="device_admin">Locker</string>
