@@ -1,4 +1,4 @@
 Locker
 ======
 
-Android app for enforcing maximum failed unlock attempst
+Android app for enforcing maximum failed unlock attempts
