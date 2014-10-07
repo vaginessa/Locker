@@ -158,7 +158,7 @@ public class MainFragment extends Fragment  {
 	private void updateAdminCheck(){   
 		adjustAdminUI(isActiveAdmin());
 
-    	lockProgress.setProgress(settings.getInt("unlockLimit", 3));
+    	lockProgress.setProgress(settings.getInt("unlockLimit", 5));
     	
 	}
 	
@@ -168,7 +168,7 @@ public class MainFragment extends Fragment  {
     	if (isProtected){
     		statusLayout.setBackgroundColor(Color.parseColor("#74ae35"));
     		statusTextTitle.setText(getActivity().getString(R.string.protect));
-    		int unlockLimit = settings.getInt("unlockLimit", 3);
+    		int unlockLimit = settings.getInt("unlockLimit", 5);
     		statusTextSummary.setText(getActivity().getString(R.string.protected_summary_one)
     				+ " " + Integer.toString(unlockLimit) + " "
     				+ getActivity().getString(R.string.protected_summary_two));
@@ -256,5 +256,5 @@ public class MainFragment extends Fragment  {
          dialogFrag.setTargetFragment(this, DISABLE_PROTECTION_DIALOG_FRAGMENT);
          dialogFrag.show(getFragmentManager().beginTransaction(), "DisableLockProtectionDialog");
 	 }
-	 
+
 }
