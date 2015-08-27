@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Locker</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="not_protected">Not protected</string>
+    <string name="not_protected_summary">Your lock screen is currently unprotected.</string>
+    <string name="protect">Protected</string>
+    <string name="protected_summary_one">Device will be erased after</string>
+    <string name="protected_summary_two">failed unlock attempts.</string>
+    <string name="admin_summary">Locker needs Administrator access in order to control the lock screen protection.</string>
+    <string name="admin_checkbox">Admin Enabled</string>
+    <string name="attempts">Allowed Unlock Attempts</string>
+    <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
+    
+    <!--  Lock protection dialogs -->
+    <string name="lock_dialog_title">Enable lock screen protection?</string>
+    <string name="lock_dialog_summary">Your device will be wiped after the specified number of failed unlock attempts. You can disable this protection any time with Locker.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="lock_disable_dialog_title">Disable lock screen protection?</string>
+    <string name="lock_disable_dialog_summary">Your lock screen will no longer be protected and an unlimited number of attempts to unlock your device will be possible.</string>
+
+    <!--  Device Administration -->
+    <string name="activity_sample_device_admin">Locker Administrator</string>
+    <string name="device_admin">Locker</string>
+    <string name="device_admin_summary">Allow locker to erase the phone after numerous failed unlock attempts</string>
+    <string name="admin_receiver_status_enabled">Locker is now a device administrator</string>
+    <string name="admin_receiver_status_disable_warning">Locker will no longer be able to protect your device</string>
+    <string name="admin_receiver_status_disabled">Locker is no longer a device administrator</string>
+    <string name="add_admin_extra_app_text">Locker needs to monitor screen-unlock attempts and the ability to erase all data in order to wipe the phone after failed unlock attempts</string>
+
+    <!-- Sim Card Lock -->
+    <string name="sim_card_lock_title">SIM Card Protection</string>
+    <string name="sim_card_lock_summary">Locker can wipe your device when a different SIM card is detected.</string>
+    <string name="imsi_title">Current IMSI</string>
+    <string name="sim_card_lock_enable">SIM Lock Enable</string>
+</resources>
