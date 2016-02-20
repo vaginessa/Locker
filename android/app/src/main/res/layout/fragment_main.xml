@@ -10,6 +10,7 @@
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:background="#c61e4e"
+        android:elevation="4dp"
         android:layout_height="wrap_content" >
         
     	<TextView
@@ -44,6 +45,7 @@
         android:layout_marginRight="5dp"
         android:background="#ffffff"
         android:layout_marginTop="5dp"
+        android:elevation="2dp"
         android:layout_below="@id/top_layout"
         android:layout_height="wrap_content" >
     	
@@ -118,71 +120,6 @@
         android:onClick="enableProtection"
         android:text="@string/enable" />
 
-    <RelativeLayout
-        android:id="@+id/simLockLayout"
-        android:layout_width="match_parent"
-        android:background="#ffffff"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonApply">
-
-        <TextView
-            android:id="@+id/textViewSimTitle"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textSize="17sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sim_card_lock_title" />
-
-        <TextView
-            android:id="@+id/textViewSimSummary"
-            android:layout_alignLeft="@id/textViewSimTitle"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
-            android:textSize="15sp"
-            android:layout_below="@id/textViewSimTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sim_card_lock_summary" />
-
-        <TextView
-            android:id="@+id/textViewSimIdTitle"
-            android:layout_alignLeft="@id/textViewSimTitle"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
-            android:textSize="15sp"
-            android:layout_below="@id/textViewSimSummary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#616161"
-            android:text="@string/imsi_title" />
-
-        <TextView
-            android:id="@+id/textViewSimIdValue"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/textViewSimIdTitle"
-            android:textSize="15sp"
-            android:layout_below="@id/textViewSimSummary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#1e91c6"
-            android:text="000000000" />
-
-        <CheckBox
-            android:id="@+id/checkBoxSimLock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/textViewSimIdTitle"
-            android:layout_below="@id/textViewSimIdTitle"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="10dp"
-            android:onClick="onSimLockCheckboxClicked"
-            android:text="@string/sim_card_lock_enable" />
-
-
-    </RelativeLayout>
 
 
 </RelativeLayout>
