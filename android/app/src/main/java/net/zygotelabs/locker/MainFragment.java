@@ -23,23 +23,23 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MainFragment extends Fragment  {
-	CheckBox checkBox;
-	Button button;
-	ComponentName mDeviceAdmin;
-	DevicePolicyManager mDPM;
-	RelativeLayout statusLayout;
-	TextView statusTextTitle;
-	TextView statusTextSummary;
-	TextView seekTextValue;
-	SeekBar lockProgress;
-	
-	int mStackLevel = 0;
+	private CheckBox checkBox;
+	private Button button;
+    private ComponentName mDeviceAdmin;
+    private DevicePolicyManager mDPM;
+    private RelativeLayout statusLayout;
+    private TextView statusTextTitle;
+    private TextView statusTextSummary;
+    private TextView seekTextValue;
+    private SeekBar lockProgress;
+
+    private int mStackLevel = 0;
 	public static final int ENABLE_PROTECTION_DIALOG_FRAGMENT = 5;
 	public static final int DISABLE_PROTECTION_DIALOG_FRAGMENT = 6;
 	boolean mAdminActive;
 	/* Our preferences */
-	public SharedPreferences settings;
-	public SharedPreferences.Editor editor;
+	private SharedPreferences settings;
+	private SharedPreferences.Editor editor;
 	
 	protected static final int REQUEST_CODE_ENABLE_ADMIN=1;
 	
@@ -227,7 +227,7 @@ public class MainFragment extends Fragment  {
 		        ft.remove(prev);
 		    }
 		    ft.addToBackStack(null);
-
+			ft.commit();
             DialogFragment dialogFrag = EnableLockProtectionDialog.newInstance(100);
             dialogFrag.setTargetFragment(this, ENABLE_PROTECTION_DIALOG_FRAGMENT);
             dialogFrag.show(getFragmentManager().beginTransaction(), "EnableLockProtectionDialog");
@@ -243,15 +243,16 @@ public class MainFragment extends Fragment  {
 	 
 	 void showDisableProtectionDialog() {
 
-		    mStackLevel++;
 
-		    FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-		    Fragment prev = getActivity().getFragmentManager().findFragmentByTag("DisableLockProtectionDialog");
-		    if (prev != null) {
-		        ft.remove(prev);
-		    }
-		    ft.addToBackStack(null);
+        mStackLevel++;
 
+        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        Fragment prev = getActivity().getFragmentManager().findFragmentByTag("DisableLockProtectionDialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+		 ft.commit();
          DialogFragment dialogFrag = DisableLockProtectionDialog.newInstance(101);
          dialogFrag.setTargetFragment(this, DISABLE_PROTECTION_DIALOG_FRAGMENT);
          dialogFrag.show(getFragmentManager().beginTransaction(), "DisableLockProtectionDialog");
