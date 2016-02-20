@@ -30,7 +30,7 @@
     <string name="admin_receiver_status_enabled">Locker is now a device administrator</string>
     <string name="admin_receiver_status_disable_warning">Locker will no longer be able to protect your device</string>
     <string name="admin_receiver_status_disabled">Locker is no longer a device administrator</string>
-    <string name="add_admin_extra_app_text">Locker needs to monitor screen-unlock attempts and the ability to erase all data in order to wipe the phone after failed unlock attempts</string>
+    <string name="add_admin_extra_app_text">Locker needs to monitor screen-unlock attempts and the ability to erase all data in order to wipe the phone after a given number of failed unlock attempts.</string>
 
     <!-- Sim Card Lock -->
     <string name="sim_card_lock_title">SIM Card Protection</string>
