@@ -32,9 +32,4 @@
     <string name="admin_receiver_status_disabled">Locker is no longer a device administrator</string>
     <string name="add_admin_extra_app_text">Locker needs to monitor screen-unlock attempts and the ability to erase all data in order to wipe the phone after a given number of failed unlock attempts.</string>
 
-    <!-- Sim Card Lock -->
-    <string name="sim_card_lock_title">SIM Card Protection</string>
-    <string name="sim_card_lock_summary">Locker can wipe your device when a different SIM card is detected.</string>
-    <string name="imsi_title">Current IMSI</string>
-    <string name="sim_card_lock_enable">SIM Lock Enable</string>
 </resources>
