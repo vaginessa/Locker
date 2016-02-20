@@ -23,13 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".DeviceAdmin"
-            android:label="@string/activity_sample_device_admin">
-		    <intent-filter>
-		        <action android:name="android.intent.action.MAIN" />
-		    </intent-filter>
-		</activity>
 		
          <receiver
             android:name=".DeviceAdmin"
