@@ -26,10 +26,10 @@
     <!--  Device Administration -->
     <string name="activity_sample_device_admin">Locker Administrator</string>
     <string name="device_admin">Locker</string>
-    <string name="device_admin_summary">Allow locker to erase the phone after numerous failed unlock attempts</string>
+    <string name="device_admin_summary">Allow Locker to erase the device after numerous failed unlock attempts</string>
     <string name="admin_receiver_status_enabled">Locker is now a device administrator</string>
     <string name="admin_receiver_status_disable_warning">Locker will no longer be able to protect your device</string>
     <string name="admin_receiver_status_disabled">Locker is no longer a device administrator</string>
-    <string name="add_admin_extra_app_text">Locker needs to monitor screen-unlock attempts and the ability to erase all data in order to wipe the phone after a given number of failed unlock attempts.</string>
+    <string name="add_admin_extra_app_text">Locker needs to monitor screen-unlock attempts and the ability to erase all data in order to wipe the device after a given number of failed unlock attempts.</string>
 
 </resources>
