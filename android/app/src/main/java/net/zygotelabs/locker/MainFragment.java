@@ -34,9 +34,9 @@ public class MainFragment extends Fragment  {
     private SeekBar lockProgress;
 
     private int mStackLevel = 0;
-	public static final int ENABLE_PROTECTION_DIALOG_FRAGMENT = 5;
-	public static final int DISABLE_PROTECTION_DIALOG_FRAGMENT = 6;
-	boolean mAdminActive;
+	private static final int ENABLE_PROTECTION_DIALOG_FRAGMENT = 5;
+	private static final int DISABLE_PROTECTION_DIALOG_FRAGMENT = 6;
+
 	/* Our preferences */
 	private SharedPreferences settings;
 	private SharedPreferences.Editor editor;
@@ -56,7 +56,7 @@ public class MainFragment extends Fragment  {
         }
         
 		mDeviceAdmin = new ComponentName(getActivity(), DeviceAdmin.class);
-		mDPM=(DevicePolicyManager)getActivity().getSystemService(getActivity().DEVICE_POLICY_SERVICE);
+		mDPM = (DevicePolicyManager)getActivity().getSystemService(getActivity().DEVICE_POLICY_SERVICE);
 		/* Load our preferences */
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		editor = settings.edit();
@@ -209,7 +209,7 @@ public class MainFragment extends Fragment  {
 
 	 }
 	 
-	 public void enableLockProtection(){
+	 private void enableLockProtection(){
 		 mDPM.setMaximumFailedPasswordsForWipe(mDeviceAdmin, lockProgress.getProgress());
 		 editor.putInt("unlockLimit",  lockProgress.getProgress());
 		 editor.putBoolean("lockEnabled", true);
@@ -217,7 +217,7 @@ public class MainFragment extends Fragment  {
 		 updateAdminCheck();
 	 }
 	 
-	 void showEnableProtectionDialog() {
+	 private void showEnableProtectionDialog() {
 
 		    mStackLevel++;
 
@@ -233,7 +233,7 @@ public class MainFragment extends Fragment  {
             dialogFrag.show(getFragmentManager().beginTransaction(), "EnableLockProtectionDialog");
 		    }
 	 
-	 public void disableLockProtection(){
+	 private void disableLockProtection(){
 		 editor.putBoolean("lockEnabled", false);
 		 editor.commit();
 		 mDPM.removeActiveAdmin(mDeviceAdmin);
@@ -241,7 +241,7 @@ public class MainFragment extends Fragment  {
 		 checkBox.setChecked(false);
 	 }
 	 
-	 void showDisableProtectionDialog() {
+	 private void showDisableProtectionDialog() {
 
 
         mStackLevel++;
