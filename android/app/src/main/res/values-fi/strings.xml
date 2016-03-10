@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Locker</string>
+    <string name="action_settings">Asetukset</string>
+
+    <string name="not_protected">Ei suojattu</string>
+    <string name="not_protected_summary">Lukitusnäyttösi on tällä hetkellä suojaamaton.</string>
+    <string name="protect">Suojattu</string>
+    <string name="protected_summary_one">Laite pyyhitään tyhjäksi</string>
+    <string name="protected_summary_two">epäonnistuneen lukituksen purkuyrityksen jälkeen.</string>
+    <string name="admin_summary">Locker tarvitsee ylläpitäjän oikeudet voidakseen hallita lukitusnäytön suojausta.</string>
+    <string name="admin_checkbox">Ylläpitäjä käytössä</string>
+    <string name="attempts">Sallittujen purkuyritysten määrä</string>
+    <string name="enable">Ota käyttöön</string>
+    <string name="disable">Poista käytöstä</string>
+
+    <!-- Lock protection dialogs -->
+    <string name="lock_dialog_title">Ota lukitusnäytön suojaus käyttöön?</string>
+    <string name="lock_dialog_summary">Laitteesi pyyhitään tyhjäksi kun lukituksen purku on epäonnistunut riittävän monta kertaa. Voit poistaa tämän suojauksen käytöstä milloin tahansa Lockerin avulla.</string>
+    <string name="yes">Kyllä</string>
+    <string name="no">Ei</string>
+    <string name="lock_disable_dialog_title">Poista lukitusnäytön suojaus käytöstä?</string>
+    <string name="lock_disable_dialog_summary">Lukitusnäyttösi ei ole enää suojattu ja laitteesi lukituksen purkua voidaan yrittää rajoittamattomasti.</string>
+
+    <!-- Device Administration -->
+    <string name="activity_sample_device_admin">Lockerin ylläpitäjä</string>
+    <string name="device_admin">Locker</string>
+    <string name="device_admin_summary">Salli Lockerin pyyhkiä laite tyhjäksi useiden epäonnistuneiden purkuyritysten jälkeen</string>
+    <string name="admin_receiver_status_enabled">Locker on nyt laitteen ylläpitäjä</string>
+    <string name="admin_receiver_status_disable_warning">Locker ei pysty enää suojaamaan laitettasi</string>
+    <string name="admin_receiver_status_disabled">Locker ei ole enää laitteen ylläpitäjä</string>
+    <string name="add_admin_extra_app_text">Lockerin täytyy tarkkailla ruudun lukituksen poistamisyrityksiä ja se tarvitsee kyvyn kaiken tiedon poistamiseen voidakseen tyhjentää laitteen riittävän monen epäonnistuneen lukituksen purkuyrityksen jälkeen.</string>
+
+</resources>
