@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,7 +167,7 @@ public class MainFragment extends Fragment  {
 		boolean isProtected = settings.getBoolean("lockEnabled", false);
 		
     	if (isProtected){
-    		statusLayout.setBackgroundColor(Color.parseColor("#74ae35"));
+			statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
     		statusTextTitle.setText(getActivity().getString(R.string.protect));
     		int unlockLimit = settings.getInt("unlockLimit", 5);
     		statusTextSummary.setText(getActivity().getString(R.string.protected_summary_one)
@@ -176,7 +177,7 @@ public class MainFragment extends Fragment  {
     		lockProgress.setEnabled(false);
     		
     	}else{
-    		statusLayout.setBackgroundColor(Color.parseColor("#c61e4e"));
+    		statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
     		statusTextTitle.setText(getActivity().getString(R.string.not_protected));
     		statusTextSummary.setText(getActivity().getString(R.string.not_protected_summary));
     		button.setText(getActivity().getString(R.string.enable));
