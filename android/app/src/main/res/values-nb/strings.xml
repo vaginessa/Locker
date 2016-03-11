@@ -26,7 +26,9 @@
     <!--  Device Administration -->
     <string name="activity_sample_device_admin">Locker Administrator</string>
     <string name="device_admin">Locker</string>
+    <!-- Disabled due to Android Studio Bug
     <string name="device_admin_summary">Tillate Locker å slette telefonen etter en gitt anntall mislykkede forsøk på å låse opp.</string>
+    -->
     <string name="admin_receiver_status_enabled">Locker er nå en enhetsadministrator</string>
     <string name="admin_receiver_status_disable_warning">Locker vil ikke lenger kunne beskytte telefonen din</string>
     <string name="admin_receiver_status_disabled">Locker er ikke lenger en enhetsadministrator</string>

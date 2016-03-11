@@ -26,7 +26,9 @@
     <!-- Device Administration -->
     <string name="activity_sample_device_admin">Lockerin ylläpitäjä</string>
     <string name="device_admin">Locker</string>
+    <!-- Disabled due to Android Studio Bug
     <string name="device_admin_summary">Salli Lockerin pyyhkiä laite tyhjäksi useiden epäonnistuneiden purkuyritysten jälkeen</string>
+    -->
     <string name="admin_receiver_status_enabled">Locker on nyt laitteen ylläpitäjä</string>
     <string name="admin_receiver_status_disable_warning">Locker ei pysty enää suojaamaan laitettasi</string>
     <string name="admin_receiver_status_disabled">Locker ei ole enää laitteen ylläpitäjä</string>
