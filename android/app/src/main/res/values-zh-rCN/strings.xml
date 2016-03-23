@@ -27,7 +27,9 @@
     <!--  Device Administration -->
     <string name="activity_sample_device_admin">Locker 管理员</string>
     <string name="device_admin">Locker</string>
+    <!-- Disabled due to Android Studio Bug
     <string name="device_admin_summary" translatable="false">允许 Locker 在数次解锁尝试失败后清除设备数据</string>
+    -->
     <string name="admin_receiver_status_enabled">Locker 目前拥有设备管理员权限</string>
     <string name="admin_receiver_status_disable_warning">Locker 将无法继续保护您的设备</string>
     <string name="admin_receiver_status_disabled">Locker 不再拥有设备管理员权限</string>
