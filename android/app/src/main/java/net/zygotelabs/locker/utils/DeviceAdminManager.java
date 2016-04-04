@@ -60,7 +60,7 @@ public class DeviceAdminManager {
         } else {
             /**
              * Due to an AOSP bug (https://code.google.com/p/android/issues/detail?id=79971)
-             * checking the number of failed unlock attempts will fail on Android 5.0 devices.
+             * checking the number of failed unlock attempts will fail on Android 5.0/5.0.1 devices.
              * Therefore we verify that functionality here before enabling the protection.
              * If it fails we inform the user.
              */
