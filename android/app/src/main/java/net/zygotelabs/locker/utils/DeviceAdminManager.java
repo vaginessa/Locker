@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import net.zygotelabs.locker.DeviceAdmin;
 import net.zygotelabs.locker.R;
@@ -56,13 +57,25 @@ public class DeviceAdminManager {
             } catch (Exception ex) {
                 return false;
             }
+        } else {
+            /**
+             * Due to an AOSP bug (https://code.google.com/p/android/issues/detail?id=79971)
+             * checking the number of failed unlock attempts will fail on Android 5.0 devices.
+             * Therefore we verify that functionality here before enabling the protection.
+             * If it fails we inform the user.
+             */
+            try {
+                getNumberOfFailedUnlockAttempts();
+            } catch (Exception ex){
+                Toast.makeText(context, context.getString(R.string.hide_lockscreen_warning_error), Toast.LENGTH_LONG).show();
+                return false;
+            }
         }
 
         return true;
     }
 
     private int getNumberOfFailedUnlockAttempts(){
-        int failedAttempts = mDPM.getCurrentFailedPasswordAttempts();
         return mDPM.getCurrentFailedPasswordAttempts();
     }
 
