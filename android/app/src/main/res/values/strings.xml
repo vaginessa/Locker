@@ -15,6 +15,7 @@
     <string name="attempts">Allowed Unlock Attempts</string>
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
+    <string name="hide_lockscreen_warning">Disable Lock Screen Warning</string>
     
     <!--  Lock protection dialogs -->
     <string name="lock_dialog_title">Enable lock screen protection?</string>
