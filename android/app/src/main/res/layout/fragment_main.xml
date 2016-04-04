@@ -129,7 +129,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/buttonApply"
         android:layout_marginTop="15dp"
-        android:textColor="@color/colorLightBlack"
+        android:textColor="@color/colorGray"
         android:text="@string/hide_lockscreen_warning" />
 
 
