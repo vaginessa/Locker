@@ -16,6 +16,7 @@
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
     <string name="hide_lockscreen_warning">Disable Lock Screen Warning</string>
+    <string name="hide_lockscreen_warning_error">Bypassing the lock screen warning is not possible on this device.</string>
     
     <!--  Lock protection dialogs -->
     <string name="lock_dialog_title">Enable lock screen protection?</string>
