@@ -33,4 +33,6 @@
     <string name="admin_receiver_status_disable_warning">Locker vil ikke lenger kunne beskytte telefonen din</string>
     <string name="admin_receiver_status_disabled">Locker er ikke lenger en enhetsadministrator</string>
     <string name="add_admin_extra_app_text">Locker behøver å overvåke skjermopplåsing og evnen til å slette all brukerdata fra telefonen etter et gitt antall mislykkede forsøk på å låse opp telefonen.</string>
+    <string name="hide_lockscreen_warning">Deaktiver varsling på låseskjerm</string>
+    <string name="hide_lockscreen_warning_error">Deaktivering av varsling på låseskjerm er ikke mulig på denne enheten</string>
 </resources>
