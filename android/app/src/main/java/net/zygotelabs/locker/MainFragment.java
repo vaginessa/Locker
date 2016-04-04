@@ -2,14 +2,15 @@ package net.zygotelabs.locker;
 
 import net.zygotelabs.locker.dialogs.DisableLockProtectionDialog;
 import net.zygotelabs.locker.dialogs.EnableLockProtectionDialog;
+import net.zygotelabs.locker.utils.DeviceAdminManager;
+
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
@@ -24,14 +25,14 @@ import android.widget.TextView;
 
 public class MainFragment extends Fragment  {
 	private CheckBox checkBox;
+    private CheckBox checkBoxHideWarning;
 	private Button button;
-    private ComponentName mDeviceAdmin;
-    private DevicePolicyManager mDPM;
     private RelativeLayout statusLayout;
     private TextView statusTextTitle;
     private TextView statusTextSummary;
     private TextView seekTextValue;
     private SeekBar lockProgress;
+	private DeviceAdminManager dam;
 
     private int mStackLevel = 0;
 	private static final int ENABLE_PROTECTION_DIALOG_FRAGMENT = 5;
@@ -44,8 +45,7 @@ public class MainFragment extends Fragment  {
 	protected static final int REQUEST_CODE_ENABLE_ADMIN=1;
 	
 	public MainFragment() {
-		
-		
+
 	}
 	
     @Override
@@ -54,9 +54,8 @@ public class MainFragment extends Fragment  {
         if (savedInstanceState != null) {
             mStackLevel = savedInstanceState.getInt("level");
         }
-        
-		mDeviceAdmin = new ComponentName(getActivity(), DeviceAdmin.class);
-		mDPM = (DevicePolicyManager)getActivity().getSystemService(getActivity().DEVICE_POLICY_SERVICE);
+
+        dam = new DeviceAdminManager(getActivity());
 		/* Load our preferences */
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		editor = settings.edit();
@@ -75,40 +74,47 @@ public class MainFragment extends Fragment  {
 		View rootView = inflater.inflate(R.layout.fragment_main, container,
 				false);
 		checkBox = (CheckBox) rootView.findViewById(R.id.checkBoxAdmin);
+        checkBoxHideWarning = (CheckBox) rootView.findViewById(R.id.checkBoxHideWarning);
 		button = (Button) rootView.findViewById(R.id.buttonApply);
 		statusLayout = (RelativeLayout) rootView.findViewById(R.id.top_layout);
 		statusTextTitle = (TextView) rootView.findViewById(R.id.textViewTopTitle);
 		statusTextSummary = (TextView) rootView.findViewById(R.id.textViewTopTitleSummary);
 		seekTextValue = (TextView) rootView.findViewById(R.id.textViewLockerCount);
 		lockProgress = (SeekBar) rootView.findViewById(R.id.seekBarLocker);
+
+        //If API level = 21 we hide checkBoxHideWarning completely
+        if (Build.VERSION.SDK_INT == 21){
+            checkBoxHideWarning.setVisibility(View.INVISIBLE);
+            checkBoxHideWarning.setChecked(false);
+        }
 		
-		lockProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){ 
+		lockProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-			   @Override 
-			   public void onProgressChanged(SeekBar seekBar, int progress, 
-			     boolean fromUser) { 
-			    // TODO Auto-generated method stub 
-				   if (progress == 0) { 
-					   lockProgress.setProgress(progress += 1);
-				   }
-				   seekTextValue.setText(String.valueOf(progress));
-				   editor.putInt("unlockLimit",  lockProgress.getProgress());
-				   editor.commit();
-				
-			   }
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                if (progress == 0) {
+                    lockProgress.setProgress(progress += 1);
+                }
+                seekTextValue.setText(String.valueOf(progress));
+                editor.putInt("unlockLimit", lockProgress.getProgress());
+                editor.commit();
 
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
-			}
+            }
 
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
-			}  
-			   });
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+
+            }
+        });
 		updateAdminCheck();
 		return rootView;
 	}
@@ -141,29 +147,25 @@ public class MainFragment extends Fragment  {
 	public void onCheckBoxClicked(boolean checked){
 
 	    if (checked) {
-	    	
-	    	// Launch the activity to have the user enable our admin.
-            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdmin);
-            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                    getActivity().getString(R.string.add_admin_extra_app_text));
-            startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
+	    	// Launch the activity to have the user enable admin privileges for Locker
+	    	startActivityForResult(dam.getStartAdminEnableIntent(), REQUEST_CODE_ENABLE_ADMIN);
             
 	    }else {
-	    	 mDPM.removeActiveAdmin(mDeviceAdmin);
-	    	 adjustAdminUI(false);
+            // Remove admin privileges for app.
+            if (dam.removeAdminRole()){
+                adjustAdminUI(false);
+            }
 	    }
 	}
 	
 	private void updateAdminCheck(){   
-		adjustAdminUI(isActiveAdmin());
-
+		adjustAdminUI(dam.isActiveAdmin());
     	lockProgress.setProgress(settings.getInt("unlockLimit", 5));
     	
 	}
 	
 	private void updateLockStatus(){
-		boolean isProtected = settings.getBoolean("lockEnabled", false);
+		boolean isProtected = dam.isProtected();
 		
     	if (isProtected){
 			statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
@@ -173,6 +175,8 @@ public class MainFragment extends Fragment  {
     				+ " " + Integer.toString(unlockLimit) + " "
     				+ getActivity().getString(R.string.protected_summary_two));
     		button.setText(getActivity().getString(R.string.disable));
+            checkBoxHideWarning.setChecked(settings.getBoolean("hideWarning", false));
+            checkBoxHideWarning.setEnabled(false);
     		lockProgress.setEnabled(false);
     		
     	}else{
@@ -180,8 +184,11 @@ public class MainFragment extends Fragment  {
     		statusTextTitle.setText(getActivity().getString(R.string.not_protected));
     		statusTextSummary.setText(getActivity().getString(R.string.not_protected_summary));
     		button.setText(getActivity().getString(R.string.enable));
-    		lockProgress.setEnabled(true);
+            lockProgress.setEnabled(true);
+            checkBoxHideWarning.setEnabled(true);
     	}
+
+
 	}
 	
 	private void adjustAdminUI(boolean adminState){
@@ -193,13 +200,10 @@ public class MainFragment extends Fragment  {
 	    	}
 	    	updateLockStatus();
 	}
-	
-	 private boolean isActiveAdmin() {
-		 return mDPM.isAdminActive(mDeviceAdmin);
-	 }
+
 	
 	 public void toggleLockProtection(){
-		 if (settings.getBoolean("lockEnabled", false)){
+         if (settings.getBoolean("lockEnabled", false)){
 			 showDisableProtectionDialog();
 
 		 }else{
@@ -210,10 +214,14 @@ public class MainFragment extends Fragment  {
 	 }
 	 
 	 private void enableLockProtection(){
-		 mDPM.setMaximumFailedPasswordsForWipe(mDeviceAdmin, lockProgress.getProgress());
-		 editor.putInt("unlockLimit",  lockProgress.getProgress());
-		 editor.putBoolean("lockEnabled", true);
-		 editor.commit();
+         if (dam.enableLockScreenProtection(lockProgress.getProgress(), checkBoxHideWarning.isChecked())){
+             editor.putInt("unlockLimit",  lockProgress.getProgress());
+             editor.putBoolean("lockEnabled", true);
+             editor.putBoolean("hideWarning", checkBoxHideWarning.isChecked());
+             editor.commit();
+         } else {
+             checkBoxHideWarning.setChecked(false);
+         }
 		 updateAdminCheck();
 	 }
 	 
@@ -234,11 +242,12 @@ public class MainFragment extends Fragment  {
 		    }
 	 
 	 private void disableLockProtection(){
-		 editor.putBoolean("lockEnabled", false);
-		 editor.commit();
-		 mDPM.removeActiveAdmin(mDeviceAdmin);
+		 if (dam.removeAdminRole()){
+             editor.putBoolean("lockEnabled", false);
+             editor.commit();
+             checkBox.setChecked(false);
+         }
 		 updateAdminCheck();
-		 checkBox.setChecked(false);
 	 }
 	 
 	 private void showDisableProtectionDialog() {

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import net.zygotelabs.locker.utils.DeviceAdminManager;
+
 public class DeviceAdmin extends DeviceAdminReceiver {
 
     private void showToast(Context context, String msg) {
@@ -26,5 +28,10 @@ public class DeviceAdmin extends DeviceAdminReceiver {
         showToast(context, context.getString(R.string.admin_receiver_status_disabled));
     }
 
+    @Override
+    public void onPasswordFailed(Context ctxt, Intent intent) {
+        DeviceAdminManager dam = new DeviceAdminManager(ctxt);
+        dam.failedUnlockAttemptOccurred();
+    }
 
 }
