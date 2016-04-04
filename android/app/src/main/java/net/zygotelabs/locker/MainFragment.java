@@ -8,8 +8,6 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,6 +24,7 @@ import android.widget.TextView;
 
 public class MainFragment extends Fragment  {
 	private CheckBox checkBox;
+    private CheckBox checkBoxHideWarning;
 	private Button button;
     private RelativeLayout statusLayout;
     private TextView statusTextTitle;
@@ -74,6 +73,7 @@ public class MainFragment extends Fragment  {
 		View rootView = inflater.inflate(R.layout.fragment_main, container,
 				false);
 		checkBox = (CheckBox) rootView.findViewById(R.id.checkBoxAdmin);
+        checkBoxHideWarning = (CheckBox) rootView.findViewById(R.id.checkBoxHideWarning);
 		button = (Button) rootView.findViewById(R.id.buttonApply);
 		statusLayout = (RelativeLayout) rootView.findViewById(R.id.top_layout);
 		statusTextTitle = (TextView) rootView.findViewById(R.id.textViewTopTitle);
@@ -158,7 +158,7 @@ public class MainFragment extends Fragment  {
 	}
 	
 	private void updateLockStatus(){
-		boolean isProtected = settings.getBoolean("lockEnabled", false);
+		boolean isProtected = dam.isProtected();
 		
     	if (isProtected){
 			statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
@@ -168,6 +168,7 @@ public class MainFragment extends Fragment  {
     				+ " " + Integer.toString(unlockLimit) + " "
     				+ getActivity().getString(R.string.protected_summary_two));
     		button.setText(getActivity().getString(R.string.disable));
+            checkBoxHideWarning.setEnabled(false);
     		lockProgress.setEnabled(false);
     		
     	}else{
@@ -176,6 +177,7 @@ public class MainFragment extends Fragment  {
     		statusTextSummary.setText(getActivity().getString(R.string.not_protected_summary));
     		button.setText(getActivity().getString(R.string.enable));
     		lockProgress.setEnabled(true);
+            checkBoxHideWarning.setEnabled(true);
     	}
 	}
 	
@@ -202,7 +204,7 @@ public class MainFragment extends Fragment  {
 	 }
 	 
 	 private void enableLockProtection(){
-         if (dam.enableLockScreenProtection(lockProgress.getProgress())){
+         if (dam.enableLockScreenProtection(lockProgress.getProgress(), checkBoxHideWarning.isChecked())){
              editor.putInt("unlockLimit",  lockProgress.getProgress());
              editor.putBoolean("lockEnabled", true);
              editor.commit();

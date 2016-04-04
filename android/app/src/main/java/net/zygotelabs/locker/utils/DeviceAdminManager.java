@@ -4,6 +4,8 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import net.zygotelabs.locker.DeviceAdmin;
 import net.zygotelabs.locker.R;
@@ -13,13 +15,14 @@ public class DeviceAdminManager {
     private Context context;
     private ComponentName mDeviceAdmin;
     private DevicePolicyManager mDPM;
+    private SharedPreferences settings;
 
     public DeviceAdminManager(Context context) {
         this.context = context;
         mDeviceAdmin = new ComponentName(context, DeviceAdmin.class);
         mDPM = (DevicePolicyManager) context.getSystemService(context.DEVICE_POLICY_SERVICE);
+        settings = PreferenceManager.getDefaultSharedPreferences(context);
     }
-
 
     public boolean isActiveAdmin() {
         return mDPM.isAdminActive(mDeviceAdmin);
@@ -45,12 +48,39 @@ public class DeviceAdminManager {
         }
     }
 
-    public boolean enableLockScreenProtection(int maxAttempts){
-        try {
-            mDPM.setMaximumFailedPasswordsForWipe(mDeviceAdmin, maxAttempts);
-            return true;
-        } catch (Exception ex){
-            return false;
+    public boolean enableLockScreenProtection(int maxAttempts, boolean hideWarning){
+        if (!hideWarning) {
+            try {
+                mDPM.setMaximumFailedPasswordsForWipe(mDeviceAdmin, maxAttempts);
+                return true;
+            } catch (Exception ex) {
+                return false;
+            }
         }
+
+        return true;
+    }
+
+    private int getNumberOfFailedUnlockAttempts(){
+        int failedAttempts = mDPM.getCurrentFailedPasswordAttempts();
+        return mDPM.getCurrentFailedPasswordAttempts();
+    }
+
+    public void failedUnlockAttemptOccurred(){
+        /**
+         * Failed unlock attempt occurred. Check number of
+         * failed unlock attempts and wipe the device if necessary.
+          */
+
+        if (isProtected()){
+            if (getNumberOfFailedUnlockAttempts() >= settings.getInt("unlockLimit", 5)){
+                mDPM.wipeData(0);
+            }
+        }
+
+    }
+
+    public boolean isProtected(){
+        return settings.getBoolean("lockEnabled", false);
     }
 }
