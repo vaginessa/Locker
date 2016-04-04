@@ -140,8 +140,7 @@ public class MainFragment extends Fragment  {
         		disableLockProtection();
         	}
         	break;
-    }
-	    
+        }
 	}
 	
 	public void onCheckBoxClicked(boolean checked){
@@ -208,9 +207,7 @@ public class MainFragment extends Fragment  {
 
 		 }else{
 			 showEnableProtectionDialog();
-			 
 		 }
-
 	 }
 	 
 	 private void enableLockProtection(){
@@ -226,7 +223,6 @@ public class MainFragment extends Fragment  {
 	 }
 	 
 	 private void showEnableProtectionDialog() {
-
 		    mStackLevel++;
 
 		    FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
@@ -246,13 +242,11 @@ public class MainFragment extends Fragment  {
              editor.putBoolean("lockEnabled", false);
              editor.commit();
              checkBox.setChecked(false);
+             adjustAdminUI(false);
          }
-		 updateAdminCheck();
 	 }
 	 
 	 private void showDisableProtectionDialog() {
-
-
         mStackLevel++;
 
         FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
