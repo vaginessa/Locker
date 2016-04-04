@@ -2,6 +2,8 @@ package net.zygotelabs.locker;
 
 import net.zygotelabs.locker.dialogs.DisableLockProtectionDialog;
 import net.zygotelabs.locker.dialogs.EnableLockProtectionDialog;
+import net.zygotelabs.locker.utils.DeviceAdminManager;
+
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -32,6 +34,7 @@ public class MainFragment extends Fragment  {
     private TextView statusTextSummary;
     private TextView seekTextValue;
     private SeekBar lockProgress;
+	private DeviceAdminManager dam;
 
     private int mStackLevel = 0;
 	private static final int ENABLE_PROTECTION_DIALOG_FRAGMENT = 5;
@@ -57,6 +60,7 @@ public class MainFragment extends Fragment  {
         
 		mDeviceAdmin = new ComponentName(getActivity(), DeviceAdmin.class);
 		mDPM = (DevicePolicyManager)getActivity().getSystemService(getActivity().DEVICE_POLICY_SERVICE);
+        dam = new DeviceAdminManager(getActivity());
 		/* Load our preferences */
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		editor = settings.edit();
@@ -82,33 +86,33 @@ public class MainFragment extends Fragment  {
 		seekTextValue = (TextView) rootView.findViewById(R.id.textViewLockerCount);
 		lockProgress = (SeekBar) rootView.findViewById(R.id.seekBarLocker);
 		
-		lockProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){ 
+		lockProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-			   @Override 
-			   public void onProgressChanged(SeekBar seekBar, int progress, 
-			     boolean fromUser) { 
-			    // TODO Auto-generated method stub 
-				   if (progress == 0) { 
-					   lockProgress.setProgress(progress += 1);
-				   }
-				   seekTextValue.setText(String.valueOf(progress));
-				   editor.putInt("unlockLimit",  lockProgress.getProgress());
-				   editor.commit();
-				
-			   }
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+										  boolean fromUser) {
+				// TODO Auto-generated method stub
+				if (progress == 0) {
+					lockProgress.setProgress(progress += 1);
+				}
+				seekTextValue.setText(String.valueOf(progress));
+				editor.putInt("unlockLimit", lockProgress.getProgress());
+				editor.commit();
+
+			}
 
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
-				
-			}  
-			   });
+
+			}
+		});
 		updateAdminCheck();
 		return rootView;
 	}
@@ -156,8 +160,7 @@ public class MainFragment extends Fragment  {
 	}
 	
 	private void updateAdminCheck(){   
-		adjustAdminUI(isActiveAdmin());
-
+		adjustAdminUI(dam.isActiveAdmin());
     	lockProgress.setProgress(settings.getInt("unlockLimit", 5));
     	
 	}
@@ -193,10 +196,7 @@ public class MainFragment extends Fragment  {
 	    	}
 	    	updateLockStatus();
 	}
-	
-	 private boolean isActiveAdmin() {
-		 return mDPM.isAdminActive(mDeviceAdmin);
-	 }
+
 	
 	 public void toggleLockProtection(){
 		 if (settings.getBoolean("lockEnabled", false)){
