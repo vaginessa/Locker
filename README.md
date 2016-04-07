@@ -12,3 +12,7 @@ Locker activates and enforces the security policy that will trigger a full syste
 Be aware - Failed unlock attempts are tracked even across reboots.
 
 Locker does not currently support fingerprint unlocking. This seems to be a limitation with the Device Administration API. 
+
+How to Contribute
+=====
+Translations are always welcome though translation maintaners are even more welcome. Feel free to fork the repository and create a pull request.
