@@ -17,10 +17,12 @@
     <string name="disable">Disable</string>
     <string name="hide_lockscreen_warning">Disable Lock Screen Warning</string>
     <string name="hide_lockscreen_warning_error">Bypassing the lock screen warning is not possible on this device.</string>
-    
+    <string name="reboot_only">Device reboot only</string>
+
     <!--  Lock protection dialogs -->
     <string name="lock_dialog_title">Enable lock screen protection?</string>
-    <string name="lock_dialog_summary">Your device will be wiped after the specified number of failed unlock attempts. You can disable this protection any time with Locker.</string>
+    <string name="lock_dialog_summary">Your device will be wiped after the specified number of failed unlock attempts. You can disable this protection at any time.</string>
+    <string name="lock_dialog_reboot_only_summary">Your device will reboot after the specified number of failed unlock attempts. You can disable this protection at any time.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="lock_disable_dialog_title">Disable lock screen protection?</string>
