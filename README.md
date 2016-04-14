@@ -20,7 +20,7 @@ Locker uses the [Device Administration API](http://developer.android.com/guide/t
 
 wipeData()
 ======
-When Locker triggers the wipe your device is reset to factory default and user data is deleted by formatting the /data partition. Beaware that data is not overwritten so you should ensure device encryption is enabled in order to prevent data recovery after the wipe resets your device.
+When Locker triggers the wipe your device is reset to factory default and user data is deleted as the /data partition is formatted. Beaware that data is not overwritten so you should ensure device encryption is enabled in order to prevent data recovery after the wipe resets your device.
 
 How to Contribute
 =====
