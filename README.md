@@ -13,6 +13,15 @@ Be aware - Failed unlock attempts are tracked even across reboots.
 
 Locker does not currently support fingerprint unlocking. This seems to be a limitation with the Device Administration API. 
 
+How does it work?
+=======
+Locker uses the [Device Administration API](http://developer.android.com/guide/topics/admin/device-admin.html) to implement the appropriate security policies. By using the `setMaximumFailedPasswordsForWipe()` policy the device can be set to automatically wipe after the specified number of failed unlock attempts. This includes a warning indicator on your lock screen that shows up when you have few remaining unlock attempts. If you want a more stealthly implementation you can choose to hide the lock screen warning all together. In this case, Locker is notified on a failed unlock attempts and checks the number of failed attempts. if it exceeds the specified limit it calls [wipeData()](http://developer.android.com/reference/android/app/admin/DevicePolicyManager.html#wipeData%28int%29). Note that Android keeps track of failed unlock attempts even across reboots, so rebooting your device does not reset the failed unlock counter.
+
+
+wipeData()
+======
+When Locker triggers the wipe your device is reset to factory default and user data is deleted by formatting the /data partition. Beaware that data is not overwritten so you should ensure device encryption is enabled in order to prevent data recovery after the wipe resets your device.
+
 How to Contribute
 =====
 Translations are always welcome though translation maintaners are even more welcome. Feel free to fork the repository and create a pull request.
