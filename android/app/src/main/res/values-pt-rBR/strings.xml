@@ -36,4 +36,8 @@
     <string name="admin_receiver_status_disabled">O Locker não é mais um administrador do dispositivo</string>
     <string name="add_admin_extra_app_text">O Locker precisa monitorar as tentativas de desbloqueio de tela e da habilidade de apagar todos os dados para que possa zerar o dispositivo depois de um dado número de tentativas falhas de desbloqueio.</string>
 
+
+    <!--   'Akira Nóis ;)  -->
+
+
 </resources>
