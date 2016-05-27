@@ -3,6 +3,7 @@ package net.zygotelabs.locker;
 import net.zygotelabs.locker.dialogs.DisableLockProtectionDialog;
 import net.zygotelabs.locker.dialogs.EnableLockProtectionDialog;
 import net.zygotelabs.locker.utils.DeviceAdminManager;
+import net.zygotelabs.locker.utils.NotificationHandler;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -27,6 +28,7 @@ public class MainFragment extends Fragment  {
 	private CheckBox checkBox;
     private CheckBox checkBoxHideWarning;
     private CheckBox checkBoxSafeMode;
+    private RelativeLayout layoutSafeMode;
 	private Button button;
     private RelativeLayout statusLayout;
     private TextView statusTextTitle;
@@ -77,6 +79,7 @@ public class MainFragment extends Fragment  {
 		checkBox = (CheckBox) rootView.findViewById(R.id.checkBoxAdmin);
         checkBoxHideWarning = (CheckBox) rootView.findViewById(R.id.checkBoxHideWarning);
         checkBoxSafeMode = (CheckBox) rootView.findViewById(R.id.checkBoxSafeMode);
+        layoutSafeMode = (RelativeLayout) rootView.findViewById(R.id.safety_layout);
 		button = (Button) rootView.findViewById(R.id.buttonApply);
 		statusLayout = (RelativeLayout) rootView.findViewById(R.id.top_layout);
 		statusTextTitle = (TextView) rootView.findViewById(R.id.textViewTopTitle);
@@ -84,10 +87,15 @@ public class MainFragment extends Fragment  {
 		seekTextValue = (TextView) rootView.findViewById(R.id.textViewLockerCount);
 		lockProgress = (SeekBar) rootView.findViewById(R.id.seekBarLocker);
 
-        //If API level = 21 we hide checkBoxHideWarning completely
+        //If API level = 21 we hide checkBoxHideWarning and checkBoxSafeMode completely
         if (Build.VERSION.SDK_INT == 21){
             checkBoxHideWarning.setVisibility(View.INVISIBLE);
             checkBoxHideWarning.setChecked(false);
+            layoutSafeMode.setVisibility(View.INVISIBLE);
+            checkBoxSafeMode.setChecked(false);
+            editor.putBoolean("safeMode", false);
+            editor.putBoolean("hideWarning", false);
+            editor.commit();
         }
 		
 		lockProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -146,7 +154,6 @@ public class MainFragment extends Fragment  {
 	}
 	
 	public void onCheckBoxClicked(boolean checked){
-
 	    if (checked) {
 	    	// Launch the activity to have the user enable admin privileges for Locker
 	    	startActivityForResult(dam.getStartAdminEnableIntent(), REQUEST_CODE_ENABLE_ADMIN);
@@ -158,6 +165,18 @@ public class MainFragment extends Fragment  {
             }
 	    }
 	}
+
+
+    public void onSafeModeCheckBoxClicked(boolean checked){
+        /* SafeMode checkbox was ticked */
+        if (checked) {
+           /* Also check hide warning dialog */
+            checkBoxHideWarning.setChecked(true);
+            checkBoxHideWarning.setEnabled(false);
+        } else {
+            checkBoxHideWarning.setEnabled(true);
+        }
+    }
 	
 	private void updateAdminCheck(){   
 		adjustAdminUI(dam.isActiveAdmin());
@@ -169,18 +188,21 @@ public class MainFragment extends Fragment  {
 		boolean isProtected = dam.isProtected();
 		
     	if (isProtected){
+            int unlockLimit = settings.getInt("unlockLimit", 5);
+
 			// Check if safe mode is enabled
 			if (settings.getBoolean("safeMode", false)){
 				statusTextTitle.setText(getActivity().getString(R.string.protected_safe_mode));
+                statusTextSummary.setText(getActivity().getString(R.string.protected_safe_mode_summary));
 				statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorOrange));
 			} else {
 				statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
 				statusTextTitle.setText(getActivity().getString(R.string.protect));
+                statusTextSummary.setText(getActivity().getString(R.string.protected_summary_one)
+                        + " " + Integer.toString(unlockLimit) + " "
+                        + getActivity().getString(R.string.protected_summary_two));
 			}
-    		int unlockLimit = settings.getInt("unlockLimit", 5);
-    		statusTextSummary.setText(getActivity().getString(R.string.protected_summary_one)
-    				+ " " + Integer.toString(unlockLimit) + " "
-    				+ getActivity().getString(R.string.protected_summary_two));
+
     		button.setText(getActivity().getString(R.string.disable));
             checkBoxHideWarning.setChecked(settings.getBoolean("hideWarning", false));
             checkBoxSafeMode.setChecked(settings.getBoolean("safeMode", false));
@@ -194,7 +216,9 @@ public class MainFragment extends Fragment  {
     		statusTextSummary.setText(getActivity().getString(R.string.not_protected_summary));
     		button.setText(getActivity().getString(R.string.enable));
             lockProgress.setEnabled(true);
-            checkBoxHideWarning.setEnabled(true);
+            if (!checkBoxSafeMode.isChecked()) {
+                checkBoxHideWarning.setEnabled(true);
+            }
             checkBoxSafeMode.setEnabled(true);
     	}
 
@@ -222,7 +246,7 @@ public class MainFragment extends Fragment  {
 	 }
 	 
 	 private void enableLockProtection(){
-         if (dam.enableLockScreenProtection(lockProgress.getProgress(), checkBoxHideWarning.isChecked())){
+         if (dam.enableLockScreenProtection(lockProgress.getProgress(), checkBoxHideWarning.isChecked(), checkBoxSafeMode.isChecked())){
              editor.putInt("unlockLimit",  lockProgress.getProgress());
              editor.putBoolean("lockEnabled", true);
              editor.putBoolean("hideWarning", checkBoxHideWarning.isChecked());

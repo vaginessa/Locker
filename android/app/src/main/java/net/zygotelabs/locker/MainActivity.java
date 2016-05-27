@@ -25,6 +25,12 @@ public class MainActivity extends Activity {
 		boolean checked = ((CheckBox) view).isChecked();
 		fragment.onCheckBoxClicked(checked);
 	}
+
+	public void onSafeModeCheckboxChecked(View view){
+        MainFragment fragment = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
+        boolean checked = ((CheckBox) view).isChecked();
+        fragment.onSafeModeCheckBoxClicked(checked);
+	}
 	
 	public void enableProtection(View view){
 		MainFragment fragment = (MainFragment) getFragmentManager().findFragmentById(R.id.container);

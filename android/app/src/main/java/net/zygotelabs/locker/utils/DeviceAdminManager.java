@@ -49,8 +49,8 @@ public class DeviceAdminManager {
         }
     }
 
-    public boolean enableLockScreenProtection(int maxAttempts, boolean hideWarning){
-        if (!hideWarning) {
+    public boolean enableLockScreenProtection(int maxAttempts, boolean hideWarning, boolean safeMode){
+        if (!hideWarning && !safeMode){
             try {
                 mDPM.setMaximumFailedPasswordsForWipe(mDeviceAdmin, maxAttempts);
                 return true;
@@ -87,10 +87,15 @@ public class DeviceAdminManager {
 
         if (isProtected()){
             if (getNumberOfFailedUnlockAttempts() >= settings.getInt("unlockLimit", 5)){
-                mDPM.wipeData(0);
+                if (!settings.getBoolean("safeMode", false)) {
+                    mDPM.wipeData(0);
+                } else {
+                    // Safe mode enabled. Show notification instead.
+                    NotificationHandler nm = new NotificationHandler();
+                    nm.createTestModeWipeNotification(context);
+                }
             }
         }
-
     }
 
     public boolean isProtected(){
