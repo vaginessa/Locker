@@ -26,6 +26,7 @@ import android.widget.TextView;
 public class MainFragment extends Fragment  {
 	private CheckBox checkBox;
     private CheckBox checkBoxHideWarning;
+    private CheckBox checkBoxSafeMode;
 	private Button button;
     private RelativeLayout statusLayout;
     private TextView statusTextTitle;
@@ -75,6 +76,7 @@ public class MainFragment extends Fragment  {
 				false);
 		checkBox = (CheckBox) rootView.findViewById(R.id.checkBoxAdmin);
         checkBoxHideWarning = (CheckBox) rootView.findViewById(R.id.checkBoxHideWarning);
+        checkBoxSafeMode = (CheckBox) rootView.findViewById(R.id.checkBoxSafeMode);
 		button = (Button) rootView.findViewById(R.id.buttonApply);
 		statusLayout = (RelativeLayout) rootView.findViewById(R.id.top_layout);
 		statusTextTitle = (TextView) rootView.findViewById(R.id.textViewTopTitle);
@@ -167,15 +169,23 @@ public class MainFragment extends Fragment  {
 		boolean isProtected = dam.isProtected();
 		
     	if (isProtected){
-			statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
-    		statusTextTitle.setText(getActivity().getString(R.string.protect));
+			// Check if safe mode is enabled
+			if (settings.getBoolean("safeMode", false)){
+				statusTextTitle.setText(getActivity().getString(R.string.protected_safe_mode));
+				statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorOrange));
+			} else {
+				statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
+				statusTextTitle.setText(getActivity().getString(R.string.protect));
+			}
     		int unlockLimit = settings.getInt("unlockLimit", 5);
     		statusTextSummary.setText(getActivity().getString(R.string.protected_summary_one)
     				+ " " + Integer.toString(unlockLimit) + " "
     				+ getActivity().getString(R.string.protected_summary_two));
     		button.setText(getActivity().getString(R.string.disable));
             checkBoxHideWarning.setChecked(settings.getBoolean("hideWarning", false));
+            checkBoxSafeMode.setChecked(settings.getBoolean("safeMode", false));
             checkBoxHideWarning.setEnabled(false);
+            checkBoxSafeMode.setEnabled(false);
     		lockProgress.setEnabled(false);
     		
     	}else{
@@ -185,6 +195,7 @@ public class MainFragment extends Fragment  {
     		button.setText(getActivity().getString(R.string.enable));
             lockProgress.setEnabled(true);
             checkBoxHideWarning.setEnabled(true);
+            checkBoxSafeMode.setEnabled(true);
     	}
 
 
@@ -215,9 +226,11 @@ public class MainFragment extends Fragment  {
              editor.putInt("unlockLimit",  lockProgress.getProgress());
              editor.putBoolean("lockEnabled", true);
              editor.putBoolean("hideWarning", checkBoxHideWarning.isChecked());
+             editor.putBoolean("safeMode", checkBoxSafeMode.isChecked());
              editor.commit();
          } else {
              checkBoxHideWarning.setChecked(false);
+             checkBoxSafeMode.setChecked(false);
          }
 		 updateAdminCheck();
 	 }
