@@ -10,9 +10,7 @@ import android.support.v4.app.TaskStackBuilder;
 import net.zygotelabs.locker.MainActivity;
 import net.zygotelabs.locker.R;
 
-/**
- * Created by Zygote on 27.05.2016.
- */
+
 public class NotificationHandler {
 
     public void createTestModeWipeNotification(Context context){
