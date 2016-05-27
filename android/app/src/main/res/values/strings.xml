@@ -18,11 +18,13 @@
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
     <string name="hide_lockscreen_warning">Disable Lock Screen Warning</string>
-    <string name="hide_lockscreen_warning_error">Bypassing the lock screen warning is not possible on this device.</string>
+    <string name="hide_lockscreen_warning_error">Lock screen warning bypass and safe mode is not supported on this device.</string>
     <string name="safe_mode">Safe Mode</string>
     <string name="safe_mode_checkbox_title">Enable Safe Mode</string>
     <string name="safe_mode_summary">No wipe will be performed when safe mode is enabled. A notification will be shown instead.</string>
     <string name="reboot_only">Device reboot only</string>
+    <string name="notification_safe_mode_wipe">Wipe condition triggered</string>
+    <string name="notification_safe_mode_wipe_summary">The maximum number of allowed unlock attempts was exceeded</string>
 
     <!--  Lock protection dialogs -->
     <string name="lock_dialog_title">Enable lock screen protection?</string>
