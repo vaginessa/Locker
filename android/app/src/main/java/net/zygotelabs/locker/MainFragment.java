@@ -3,7 +3,6 @@ package net.zygotelabs.locker;
 import net.zygotelabs.locker.dialogs.DisableLockProtectionDialog;
 import net.zygotelabs.locker.dialogs.EnableLockProtectionDialog;
 import net.zygotelabs.locker.utils.DeviceAdminManager;
-import net.zygotelabs.locker.utils.NotificationHandler;
 
 import android.app.Activity;
 import android.app.DialogFragment;
