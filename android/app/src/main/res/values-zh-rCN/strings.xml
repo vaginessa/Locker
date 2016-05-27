@@ -7,6 +7,8 @@
     <!-- Main controls -->
     <string name="not_protected">未保护</string>
     <string name="not_protected_summary">您的锁屏目前未被保护.</string>
+    <string name="protected_safe_mode">Protected (Safe Mode)</string>
+    <string name="protected_safe_mode_summary">Safe Mode is enabled. No wipe will be performed</string>
     <string name="protect">已保护</string>
     <string name="protected_summary_one">该设备上的数据将在</string>
     <string name="protected_summary_two">次失败的解锁尝试后被清除.</string>
@@ -27,6 +29,7 @@
     <!--  Lock protection dialogs -->
     <string name="lock_dialog_title">启用锁屏保护?</string>
     <string name="lock_dialog_summary">您设备上的数据将在制定次数的解锁尝试失败后被清除. 您可随时用 Locker 禁用此项保护功能.</string>
+    <string name="lock_dialog_reboot_only_summary">Your device will reboot after the specified number of failed unlock attempts. You can disable this protection at any time.</string>
     <string name="yes">确认</string>
     <string name="no">取消</string>
     <string name="lock_disable_dialog_title">禁用锁屏保护?</string>

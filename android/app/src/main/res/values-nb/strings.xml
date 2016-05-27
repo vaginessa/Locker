@@ -6,6 +6,8 @@
         
     <string name="not_protected">Ikke beskyttet</string>
     <string name="not_protected_summary">Låseskjermen din er ikke beskyttet.</string>
+    <string name="protected_safe_mode">Beskyttet (Safe Mode)</string>
+    <string name="protected_safe_mode_summary">Safe Mode er aktivt. Enheten wipes ikke.</string>
     <string name="protect">Beskyttet</string>
     <string name="protected_summary_one">Enheten vil bli slettet etter</string>
     <string name="protected_summary_two">mislykkede opplåsingsforsøk.</string>
@@ -26,6 +28,7 @@
     <!--  Lock protection dialog -->
     <string name="lock_dialog_title">Aktiver beskyttelse av enhetslåslås?</string>
     <string name="lock_dialog_summary">Enheten din vil bli slettet og tilbakestilt etter det gitte antallet mislykkede opplåsingsforsøk. Du kan deaktivere beskyttelsen når som helst fra Locker.</string>
+    <string name="lock_dialog_reboot_only_summary">Your device will reboot after the specified number of failed unlock attempts. You can disable this protection at any time.</string>
     <string name="yes">Ja</string>
     <string name="no">Nei</string>
     <string name="lock_disable_dialog_title">Deaktiver beskyttelsen av enhetslås?</string>

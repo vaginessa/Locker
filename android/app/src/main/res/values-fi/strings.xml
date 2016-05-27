@@ -6,6 +6,8 @@
 
     <string name="not_protected">Ei suojattu</string>
     <string name="not_protected_summary">Lukitusnäyttösi on tällä hetkellä suojaamaton.</string>
+    <string name="protected_safe_mode">Protected (Safe Mode)</string>
+    <string name="protected_safe_mode_summary">Safe Mode is enabled. No wipe will be performed</string>
     <string name="protect">Suojattu</string>
     <string name="protected_summary_one">Laite pyyhitään tyhjäksi</string>
     <string name="protected_summary_two">epäonnistuneen lukituksen purkuyrityksen jälkeen.</string>
@@ -26,6 +28,7 @@
     <!-- Lock protection dialogs -->
     <string name="lock_dialog_title">Ota lukitusnäytön suojaus käyttöön?</string>
     <string name="lock_dialog_summary">Laitteesi pyyhitään tyhjäksi kun lukituksen purku on epäonnistunut riittävän monta kertaa. Voit poistaa tämän suojauksen käytöstä milloin tahansa Lockerin avulla.</string>
+    <string name="lock_dialog_reboot_only_summary">Your device will reboot after the specified number of failed unlock attempts. You can disable this protection at any time.</string>
     <string name="yes">Kyllä</string>
     <string name="no">Ei</string>
     <string name="lock_disable_dialog_title">Poista lukitusnäytön suojaus käytöstä?</string>

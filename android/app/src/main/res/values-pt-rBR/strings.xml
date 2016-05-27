@@ -7,6 +7,8 @@
     <!-- Main controls -->
     <string name="not_protected">Desprotegido</string>
     <string name="not_protected_summary">Sua tela de bloqueio está desprotegida no momento.</string>
+    <string name="protected_safe_mode">Protected (Safe Mode)</string>
+    <string name="protected_safe_mode_summary">Safe Mode is enabled. No wipe will be performed</string>
     <string name="protect">Protegido</string>
     <string name="protected_summary_one">O dispositivo será apagado após</string>
     <string name="protected_summary_two">tentativas falhas de desbloqueio.</string>
