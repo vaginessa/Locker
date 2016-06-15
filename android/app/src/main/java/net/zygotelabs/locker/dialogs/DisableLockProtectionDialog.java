@@ -12,7 +12,7 @@ import android.view.View;
 
 public class DisableLockProtectionDialog extends DialogFragment{
 	
-	public static DisableLockProtectionDialog newInstance(int count){
+	public static DisableLockProtectionDialog newInstance(){
 		DisableLockProtectionDialog dialog = new DisableLockProtectionDialog();
 		
 		Bundle args = new Bundle();

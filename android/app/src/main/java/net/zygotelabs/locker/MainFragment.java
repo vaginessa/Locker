@@ -220,8 +220,6 @@ public class MainFragment extends Fragment  {
             }
             checkBoxSafeMode.setEnabled(true);
     	}
-
-
 	}
 	
 	private void adjustAdminUI(boolean adminState){
@@ -294,7 +292,7 @@ public class MainFragment extends Fragment  {
         }
         ft.addToBackStack(null);
 		 ft.commit();
-         DialogFragment dialogFrag = DisableLockProtectionDialog.newInstance(101);
+         DialogFragment dialogFrag = DisableLockProtectionDialog.newInstance();
          dialogFrag.setTargetFragment(this, DISABLE_PROTECTION_DIALOG_FRAGMENT);
          dialogFrag.show(getFragmentManager().beginTransaction(), "DisableLockProtectionDialog");
 	 }
