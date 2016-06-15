@@ -245,15 +245,17 @@ public class MainFragment extends Fragment  {
 	 }
 	 
 	 private void enableLockProtection(){
-         if (dam.enableLockScreenProtection(lockProgress.getProgress(), checkBoxHideWarning.isChecked(), checkBoxSafeMode.isChecked())){
-             editor.putInt("unlockLimit",  lockProgress.getProgress());
-             editor.putBoolean("lockEnabled", true);
-             editor.putBoolean("hideWarning", checkBoxHideWarning.isChecked());
-             editor.putBoolean("safeMode", checkBoxSafeMode.isChecked());
-             editor.commit();
-         } else {
-             checkBoxHideWarning.setChecked(false);
-             checkBoxSafeMode.setChecked(false);
+         if (dam.isActiveAdmin()) {
+             if (dam.enableLockScreenProtection(lockProgress.getProgress(), checkBoxHideWarning.isChecked(), checkBoxSafeMode.isChecked())) {
+                 editor.putInt("unlockLimit", lockProgress.getProgress());
+                 editor.putBoolean("lockEnabled", true);
+                 editor.putBoolean("hideWarning", checkBoxHideWarning.isChecked());
+                 editor.putBoolean("safeMode", checkBoxSafeMode.isChecked());
+                 editor.commit();
+             } else {
+                 checkBoxHideWarning.setChecked(false);
+                 checkBoxSafeMode.setChecked(false);
+             }
          }
 		 updateAdminCheck();
 	 }
