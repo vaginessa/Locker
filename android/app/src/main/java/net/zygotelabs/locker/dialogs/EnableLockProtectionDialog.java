@@ -12,12 +12,9 @@ import android.view.View;
 
 public class EnableLockProtectionDialog extends DialogFragment{
 	
-	public static EnableLockProtectionDialog newInstance(int count){
+	public static EnableLockProtectionDialog newInstance(){
 		EnableLockProtectionDialog dialog = new EnableLockProtectionDialog();
-		
-		Bundle args = new Bundle();
-		args.putInt("lockCount", count);
-		dialog.setArguments(args);
+
 		return dialog;
 	}
 	

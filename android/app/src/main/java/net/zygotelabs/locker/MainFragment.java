@@ -268,7 +268,7 @@ public class MainFragment extends Fragment  {
 		    }
 		    ft.addToBackStack(null);
 			ft.commit();
-            DialogFragment dialogFrag = EnableLockProtectionDialog.newInstance(100);
+            DialogFragment dialogFrag = EnableLockProtectionDialog.newInstance();
             dialogFrag.setTargetFragment(this, ENABLE_PROTECTION_DIALOG_FRAGMENT);
             dialogFrag.show(getFragmentManager().beginTransaction(), "EnableLockProtectionDialog");
 		    }
