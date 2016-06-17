@@ -318,5 +318,4 @@ public class MainFragment extends Fragment  {
          dialogFrag.setTargetFragment(this, DISABLE_PROTECTION_DIALOG_FRAGMENT);
          dialogFrag.show(getFragmentManager().beginTransaction(), "DisableLockProtectionDialog");
 	 }
-
 }
