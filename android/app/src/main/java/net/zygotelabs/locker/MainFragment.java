@@ -4,12 +4,15 @@ import net.zygotelabs.locker.dialogs.DisableLockProtectionDialog;
 import net.zygotelabs.locker.dialogs.EnableLockProtectionDialog;
 import net.zygotelabs.locker.utils.DeviceAdminManager;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -193,9 +196,10 @@ public class MainFragment extends Fragment  {
 			if (settings.getBoolean("safeMode", false)){
 				statusTextTitle.setText(getActivity().getString(R.string.protected_safe_mode));
                 statusTextSummary.setText(getActivity().getString(R.string.protected_safe_mode_summary));
-				statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorOrange));
+                animateStatusLayoutColor(R.color.colorOrange);
 			} else {
-				statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
+                animateStatusLayoutColor(R.color.colorGreen);
+				//statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
 				statusTextTitle.setText(getActivity().getString(R.string.protect));
                 statusTextSummary.setText(getActivity().getString(R.string.protected_summary_one)
                         + " " + Integer.toString(unlockLimit) + " "
@@ -210,7 +214,7 @@ public class MainFragment extends Fragment  {
     		lockProgress.setEnabled(false);
     		
     	}else{
-    		statusLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
+            animateStatusLayoutColor(R.color.colorRed);
     		statusTextTitle.setText(getActivity().getString(R.string.not_protected));
     		statusTextSummary.setText(getActivity().getString(R.string.not_protected_summary));
     		button.setText(getActivity().getString(R.string.enable));
@@ -221,6 +225,25 @@ public class MainFragment extends Fragment  {
             checkBoxSafeMode.setEnabled(true);
     	}
 	}
+
+    private void animateStatusLayoutColor(int colorToId){
+        ColorDrawable viewColor = (ColorDrawable) statusLayout.getBackground();
+        int colorFrom = viewColor.getColor();
+        //int colorFrom =
+        int colorTo = ContextCompat.getColor(getActivity(), colorToId);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(500);
+        colorAnimation.setRepeatCount(0);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                statusLayout.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
+    }
 	
 	private void adjustAdminUI(boolean adminState){
 			checkBox.setChecked(adminState);
