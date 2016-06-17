@@ -229,7 +229,6 @@ public class MainFragment extends Fragment  {
     private void animateStatusLayoutColor(int colorToId){
         ColorDrawable viewColor = (ColorDrawable) statusLayout.getBackground();
         int colorFrom = viewColor.getColor();
-        //int colorFrom =
         int colorTo = ContextCompat.getColor(getActivity(), colorToId);
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(500);
