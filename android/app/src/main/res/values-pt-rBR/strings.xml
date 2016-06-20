@@ -7,8 +7,8 @@
     <!-- Main controls -->
     <string name="not_protected">Desprotegido</string>
     <string name="not_protected_summary">Sua tela de bloqueio está desprotegida no momento.</string>
-    <string name="protected_safe_mode">Protected (Safe Mode)</string>
-    <string name="protected_safe_mode_summary">Safe Mode is enabled. No wipe will be performed</string>
+    <string name="protected_safe_mode">Protegido (Modo de Segurança)</string>
+    <string name="protected_safe_mode_summary">Modo de Segurança está habilitado. Não ocorrerá o apagamento do dispositivo</string>
     <string name="protect">Protegido</string>
     <string name="protected_summary_one">O dispositivo será apagado após</string>
     <string name="protected_summary_two">tentativas falhas de desbloqueio.</string>
@@ -20,11 +20,11 @@
     <string name="hide_lockscreen_warning">Desativar Alertas na Tela de Bloqueio</string>
     <string name="hide_lockscreen_warning_error">Não é possível burlar os alertas da tela de bloqueio neste dispositivo.</string>
     <string name="reboot_only">Dispositivo apenas reinicia</string>
-    <string name="safe_mode">Safe Mode</string>
-    <string name="safe_mode_checkbox_title">Enable Safe Mode</string>
-    <string name="safe_mode_summary">No wipe will be performed when safe mode is enabled. A notification will be shown instead.</string>
-    <string name="notification_safe_mode_wipe">Wipe condition triggered</string>
-    <string name="notification_safe_mode_wipe_summary">The maximum number of allowed unlock attempts was exceeded</string>
+    <string name="safe_mode">Modo de Segurança</string>
+    <string name="safe_mode_checkbox_title">Habilitar o Modo de Segurança</string>
+    <string name="safe_mode_summary">Não será realizado o apagamento do dispositivo enquanto ele estiver no modo de segurança. Ao invés disso, uma notificação será mostrada.</string>
+    <string name="notification_safe_mode_wipe">Condição de apagamento acionada</string>
+    <string name="notification_safe_mode_wipe_summary">O número máximo de tentativas falhas de desbloqueio foi excedido</string>
 
     <!--  Lock protection dialogs -->
     <string name="lock_dialog_title">Ativar a proteção da tela de bloqueio?</string>
