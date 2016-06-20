@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Locker</string>
+    <string name="action_settings">Réglages</string>
+
+    <!-- Main controls -->
+    <string name="not_protected">Pas protégé</string>
+    <string name="not_protected_summary">Votre écran de verrouillage n'est pas protégéYour lock screen is currently unprotected.</string>
+    <string name="protected_safe_mode">Protected (Safe Mode)</string>
+    <string name="protected_safe_mode_summary">Safe Mode is enabled. No wipe will be performed</string>
+    <string name="protect">Protégé</string>
+    <string name="protected_summary_one">Les périphérique va être effacé après</string>
+    <string name="protected_summary_two">échecs de tentatives de deverrouillage.</string>
+    <string name="admin_summary">Locker a besoin des privilèges Administrateur pour pouvoir protéger l'écran de verrouillage.</string>
+    <string name="admin_checkbox">Admin Activé</string>
+    <string name="attempts">Nombre de tentatives de déverouillage autorisées</string>
+    <string name="enable">Activer</string>
+    <string name="disable">Désactiver</string>
+    <string name="hide_lockscreen_warning">Désactiver le message d'avertissement sur l'écran de verrouillage</string>
+    <string name="hide_lockscreen_warning_error">Lock screen warning bypass and safe mode is not supported on this device.</string>
+    <string name="safe_mode">Safe Mode</string>
+    <string name="safe_mode_checkbox_title">Safe Mode activé</string>
+    <string name="safe_mode_summary">Rien ne sera effacé si le safe mode est activé. Une notification apparaitra à la place.</string>
+    <string name="reboot_only">Redémarrage du périphérique seulement</string>
+    <string name="notification_safe_mode_wipe">Wipe condition triggered</string>
+    <string name="notification_safe_mode_wipe_summary">Tentatives de déverouillageThe maximum number of allowed unlock attempts was exceeded</string>
+
+    <!--  Lock protection dialogs -->
+    <string name="lock_dialog_title">Activer la protection de l'écran de verrouillage ?</string>
+    <string name="lock_dialog_summary">Votre périphérique sera effacé lorsque le nombre de tentatives de déverrouillage de l'écran sera dépassé. Vous pouvez désactiver cette protection à tout moment. Your device will be wiped after the specified number of failed unlock attempts. You can disable this protection at any time.</string>
+    <string name="lock_dialog_reboot_only_summary">Your device will reboot after the specified number of failed unlock attempts. You can disable this protection at any time.</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="lock_disable_dialog_title">Désactiver la protection de l'écran de verrouillage ?</string>
+    <string name="lock_disable_dialog_summary">Votre écran de verrouillage ne sera plus protégé et un nombre illimité de tentatives de déverrouillage sera possible.</string>
+
+    <!--  Device Administration -->
+    <string name="activity_sample_device_admin">Locker Administrator</string>
+    <string name="device_admin">Locker</string>
+    <string name="device_admin_summary" translatable="false">Autoriser l'effacement du périphérique par Locker après un nombre défini de tentatives de déverrouillage</string>
+    <string name="admin_receiver_status_enabled">Locker est maintenant un administrateur du périphérique</string>
+    <string name="admin_receiver_status_disable_warning">Locker ne sera plus en mesure de protéger votre périphérique</string>
+    <string name="admin_receiver_status_disabled">Locker n'est plus un administrateur du périphérique</string>
+    <string name="add_admin_extra_app_text">Locker a besoin de surveiller les tentatives de déverrouillage de l'écran et de la capacité à effacer toutes les données dans le but d'effacer le périphérique après un certain nombre de tentatives ratées de déverrouillage.</string>
+
+</resources>
